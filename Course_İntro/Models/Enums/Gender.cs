@@ -9,8 +9,7 @@ namespace Course_İntro.Models.Enums
     internal enum Gender
     {
         Male,
-        Female,
-        AttackHelicopter,
+        Female,        
         Other
     }
 }

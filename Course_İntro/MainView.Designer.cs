@@ -37,6 +37,11 @@
             this.comboBox_gender = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox_maidenName = new System.Windows.Forms.TextBox();
+            this.listView_students = new System.Windows.Forms.ListView();
+            this.button_deleted = new System.Windows.Forms.Button();
+            this.button_show = new System.Windows.Forms.Button();
+            this.button_edit = new System.Windows.Forms.Button();
+            this.button_saveAfterEdit = new System.Windows.Forms.Button();
             button_addStudent = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -118,11 +123,66 @@
             this.textBox_maidenName.Size = new System.Drawing.Size(100, 23);
             this.textBox_maidenName.TabIndex = 8;
             // 
+            // listView_students
+            // 
+            this.listView_students.Location = new System.Drawing.Point(551, 12);
+            this.listView_students.MultiSelect = false;
+            this.listView_students.Name = "listView_students";
+            this.listView_students.Size = new System.Drawing.Size(237, 224);
+            this.listView_students.TabIndex = 9;
+            this.listView_students.UseCompatibleStateImageBehavior = false;
+            this.listView_students.View = System.Windows.Forms.View.List;
+            // 
+            // button_deleted
+            // 
+            this.button_deleted.Location = new System.Drawing.Point(551, 242);
+            this.button_deleted.Name = "button_deleted";
+            this.button_deleted.Size = new System.Drawing.Size(75, 23);
+            this.button_deleted.TabIndex = 10;
+            this.button_deleted.Text = "Deleted";
+            this.button_deleted.UseVisualStyleBackColor = true;
+            this.button_deleted.Click += new System.EventHandler(this.Button_deleted_Click);
+            // 
+            // button_show
+            // 
+            this.button_show.Location = new System.Drawing.Point(632, 242);
+            this.button_show.Name = "button_show";
+            this.button_show.Size = new System.Drawing.Size(75, 23);
+            this.button_show.TabIndex = 11;
+            this.button_show.Text = "Show";
+            this.button_show.UseVisualStyleBackColor = true;
+            this.button_show.Click += new System.EventHandler(this.Button_show_Click);
+            // 
+            // button_edit
+            // 
+            this.button_edit.Location = new System.Drawing.Point(713, 242);
+            this.button_edit.Name = "button_edit";
+            this.button_edit.Size = new System.Drawing.Size(75, 23);
+            this.button_edit.TabIndex = 12;
+            this.button_edit.Text = "Edit";
+            this.button_edit.UseVisualStyleBackColor = true;
+            this.button_edit.Click += new System.EventHandler(this.Button_edit_Click);
+            // 
+            // button_saveAfterEdit
+            // 
+            this.button_saveAfterEdit.Location = new System.Drawing.Point(11, 264);
+            this.button_saveAfterEdit.Name = "button_saveAfterEdit";
+            this.button_saveAfterEdit.Size = new System.Drawing.Size(101, 23);
+            this.button_saveAfterEdit.TabIndex = 13;
+            this.button_saveAfterEdit.Text = "Save After Edit";
+            this.button_saveAfterEdit.UseVisualStyleBackColor = true;
+            this.button_saveAfterEdit.Click += new System.EventHandler(this.Button_saveAfterEdit_Click);
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button_saveAfterEdit);
+            this.Controls.Add(this.button_edit);
+            this.Controls.Add(this.button_show);
+            this.Controls.Add(this.button_deleted);
+            this.Controls.Add(this.listView_students);
             this.Controls.Add(this.textBox_maidenName);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.comboBox_gender);
@@ -150,5 +210,10 @@
         private ComboBox comboBox_gender;
         private Label label4;
         private TextBox textBox_maidenName;
+        private ListView listView_students;
+        private Button button_deleted;
+        private Button button_show;
+        private Button button_edit;
+        private Button button_saveAfterEdit;
     }
 }

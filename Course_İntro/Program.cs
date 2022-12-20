@@ -1,3 +1,5 @@
+using Course_İntro.Helpers;
+
 namespace Course_İntro
 {
     internal static class Program
@@ -12,6 +14,11 @@ namespace Course_İntro
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new MainView());
+
+            
+            //string name = "can";
+            //string upperName = StringHelpers.MakeAllUpperCase(name);
+            //MessageBox.Show(upperName);
         }
     }
 }

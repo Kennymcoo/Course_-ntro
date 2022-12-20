@@ -10,10 +10,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Course_İntro
 {
     public partial class MainView : Form
     {
+
+        List<Student> _studentList = new List<Student>();
+
+        int _indexToEdit = -1;
         public MainView()
         {
             InitializeComponent();
@@ -24,13 +29,14 @@ namespace Course_İntro
             //// MessageBox.Show(student1.Id + ": " + student1.FullName+ " " + student1.MaidenName + " " + student1.Gender);         
             // Student student3 = new Student("İlknur", "Elmacıoğlu", "İpekkesen");        
             // MessageBox.Show(student3.Id + ": " + student3.FullName  + student3.Gender);
+
             comboBox_gender.DataSource = Enum.GetNames(typeof(Gender));
 
         }
-        //ödev 1= isim soyisim boş olamaz kontrolü
-        //ödev 2 = bundan sonra gelen veriler ile bir tane student oluştur ve daha sonra masage box ile göster
 
 
+        //öğrenci eklendikten sonra yeni öğrenciyi hazır hale getir (textboxlar deful olsun)
+        //buttonları işlevleri
 
 
 
@@ -57,35 +63,142 @@ namespace Course_İntro
             }
         }
 
-
-        private void Button_addStudent_Click(object sender, EventArgs e)
+        private bool CheckIfTextBoxesAreFilled()
         {
             if (string.IsNullOrEmpty(textBox_firstName.Text))
             {
                 MessageBox.Show("You need to enter a name");
-                return;
+                return false;
             }
 
             if (string.IsNullOrEmpty(textBox_lastName.Text))
             {
                 MessageBox.Show("You need to enter a surname");
-                return;
+                return false;
             }
-            
-            string selectedValue = (string)comboBox_gender.SelectedValue;
-            Enum.TryParse(selectedValue, out Gender selectedGender);
+            return true;
+        }
+        private void Button_addStudent_Click(object sender, EventArgs e)
+        {
+            if (!CheckIfTextBoxesAreFilled()) return;
+
+            Student studentNew = CreateStudent();
+            _studentList.Add(studentNew);
+            RefreshListView();
+            EmptyTextBoxes();
+        }
+
+        private void RefreshListView() 
+        {
+            listView_students.Items.Clear();
+
+            for (int i = 0; i < _studentList.Count; i++)
+            {
+                Student student = _studentList[i];
+                listView_students.Items.Add(student.FullName);
+            }
+
+        }
+        private void EmptyTextBoxes()
+        {
+            string emptyText = string.Empty;
+            textBox_firstName.Text = emptyText;
+            textBox_lastName.Text = emptyText;
+            textBox_maidenName.Text = emptyText;
+            comboBox_gender.SelectedIndex = 0;
+        }
+
+        private Student CreateStudent()
+        {
+            Gender selectedGender = ExtractGender();
 
             Student studentNew;
             if (selectedGender != Gender.Female)
-            {
                 studentNew = new Student(textBox_firstName.Text, textBox_lastName.Text, selectedGender);
-            }
             else
-            {
                 studentNew = new Student(textBox_firstName.Text, textBox_lastName.Text, textBox_maidenName.Text);
-            }
 
-            MessageBox.Show(studentNew.Id + ": " + studentNew.FullName + studentNew.Gender);
+            return studentNew;
+        }
+
+        private Gender ExtractGender()
+        {
+            string selectedValue = (string)comboBox_gender.SelectedValue;
+            Enum.TryParse(selectedValue, out Gender selectedGender);
+            return selectedGender;
+        }
+
+
+    
+
+
+        private void Button_deleted_Click(object sender, EventArgs e)
+        {
+
+            if (listView_students.SelectedIndices.Count == 0)
+            {
+                MessageBox.Show("You need to select a student");
+                return;
+            }
+            int selectdIndex = listView_students.SelectedIndices[0];
+
+            _studentList.RemoveAt(selectdIndex);
+            RefreshListView();
+        }
+
+        private void Button_show_Click(object sender, EventArgs e)
+        {
+
+            if (listView_students.SelectedIndices.Count == 0)
+            {
+                MessageBox.Show("You need to select a student");
+                return;
+            }
+            int selectdIndex = listView_students.SelectedIndices[0];
+            Student student = _studentList[selectdIndex];
+           
+            MessageBox.Show(student.FullName );
+
+        }
+
+        private void Button_edit_Click(object sender, EventArgs e)
+        {
+            if (listView_students.SelectedIndices.Count == 0)
+            {
+                MessageBox.Show("You need to select a student");
+                return;
+            }
+            _indexToEdit = listView_students.SelectedIndices[0];
+            Student student = _studentList[_indexToEdit];
+
+            textBox_firstName.Text = student.FirstName;
+            textBox_lastName.Text = student.LastName;
+            textBox_maidenName.Text = student.MaidenName;
+            switch (student.Gender)
+            {
+                case Gender.Male:
+                    comboBox_gender.SelectedIndex = 0;
+                    break;
+                case Gender.Female:
+                    comboBox_gender.SelectedIndex = 1;
+                    break;
+                case Gender.Other:
+                    comboBox_gender.SelectedIndex = 2;
+                    break;               
+            }            
+        }
+
+        private void Button_saveAfterEdit_Click(object sender, EventArgs e)
+        {
+            if (_indexToEdit == -1) return;
+
+            if (!CheckIfTextBoxesAreFilled()) return;
+
+            Student editedStudent = CreateStudent();
+            _studentList[_indexToEdit] = editedStudent;
+            RefreshListView();
+            EmptyTextBoxes();
+            _indexToEdit = -1;
         }
     }
 }
