@@ -42,7 +42,13 @@
             this.button_show = new System.Windows.Forms.Button();
             this.button_edit = new System.Windows.Forms.Button();
             this.button_saveAfterEdit = new System.Windows.Forms.Button();
+            this.pictureBox_Student = new System.Windows.Forms.PictureBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button_addPhoto = new System.Windows.Forms.Button();
+            this.button_deletePhoto = new System.Windows.Forms.Button();
+            this.button_Export = new System.Windows.Forms.Button();
             button_addStudent = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Student)).BeginInit();
             this.SuspendLayout();
             // 
             // button_addStudent
@@ -125,7 +131,7 @@
             // 
             // listView_students
             // 
-            this.listView_students.Location = new System.Drawing.Point(551, 12);
+            this.listView_students.Location = new System.Drawing.Point(551, 30);
             this.listView_students.MultiSelect = false;
             this.listView_students.Name = "listView_students";
             this.listView_students.Size = new System.Drawing.Size(237, 224);
@@ -135,7 +141,7 @@
             // 
             // button_deleted
             // 
-            this.button_deleted.Location = new System.Drawing.Point(551, 242);
+            this.button_deleted.Location = new System.Drawing.Point(551, 264);
             this.button_deleted.Name = "button_deleted";
             this.button_deleted.Size = new System.Drawing.Size(75, 23);
             this.button_deleted.TabIndex = 10;
@@ -145,7 +151,7 @@
             // 
             // button_show
             // 
-            this.button_show.Location = new System.Drawing.Point(632, 242);
+            this.button_show.Location = new System.Drawing.Point(632, 264);
             this.button_show.Name = "button_show";
             this.button_show.Size = new System.Drawing.Size(75, 23);
             this.button_show.TabIndex = 11;
@@ -155,7 +161,7 @@
             // 
             // button_edit
             // 
-            this.button_edit.Location = new System.Drawing.Point(713, 242);
+            this.button_edit.Location = new System.Drawing.Point(713, 264);
             this.button_edit.Name = "button_edit";
             this.button_edit.Size = new System.Drawing.Size(75, 23);
             this.button_edit.TabIndex = 12;
@@ -173,11 +179,64 @@
             this.button_saveAfterEdit.UseVisualStyleBackColor = true;
             this.button_saveAfterEdit.Click += new System.EventHandler(this.Button_saveAfterEdit_Click);
             // 
+            // pictureBox_Student
+            // 
+            this.pictureBox_Student.Location = new System.Drawing.Point(228, 30);
+            this.pictureBox_Student.Name = "pictureBox_Student";
+            this.pictureBox_Student.Size = new System.Drawing.Size(193, 155);
+            this.pictureBox_Student.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_Student.TabIndex = 14;
+            this.pictureBox_Student.TabStop = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(228, 12);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(88, 15);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "Student Picture";
+            // 
+            // button_addPhoto
+            // 
+            this.button_addPhoto.Location = new System.Drawing.Point(228, 191);
+            this.button_addPhoto.Name = "button_addPhoto";
+            this.button_addPhoto.Size = new System.Drawing.Size(75, 23);
+            this.button_addPhoto.TabIndex = 16;
+            this.button_addPhoto.Text = "add photo";
+            this.button_addPhoto.UseVisualStyleBackColor = true;
+            this.button_addPhoto.Click += new System.EventHandler(this.button_addPhoto_Click);
+            // 
+            // button_deletePhoto
+            // 
+            this.button_deletePhoto.Location = new System.Drawing.Point(327, 191);
+            this.button_deletePhoto.Name = "button_deletePhoto";
+            this.button_deletePhoto.Size = new System.Drawing.Size(94, 23);
+            this.button_deletePhoto.TabIndex = 17;
+            this.button_deletePhoto.Text = "Delete photo";
+            this.button_deletePhoto.UseVisualStyleBackColor = true;
+            this.button_deletePhoto.Click += new System.EventHandler(this.button_deletePhoto_Click);
+            // 
+            // button_Export
+            // 
+            this.button_Export.Location = new System.Drawing.Point(551, 293);
+            this.button_Export.Name = "button_Export";
+            this.button_Export.Size = new System.Drawing.Size(75, 23);
+            this.button_Export.TabIndex = 18;
+            this.button_Export.Text = "Export ";
+            this.button_Export.UseVisualStyleBackColor = true;
+            this.button_Export.Click += new System.EventHandler(this.Button_Export);
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button_Export);
+            this.Controls.Add(this.button_deletePhoto);
+            this.Controls.Add(this.button_addPhoto);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.pictureBox_Student);
             this.Controls.Add(this.button_saveAfterEdit);
             this.Controls.Add(this.button_edit);
             this.Controls.Add(this.button_show);
@@ -194,6 +253,7 @@
             this.Controls.Add(button_addStudent);
             this.Name = "MainView";
             this.Text = "MainView";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Student)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -215,5 +275,10 @@
         private Button button_show;
         private Button button_edit;
         private Button button_saveAfterEdit;
+        private PictureBox pictureBox_Student;
+        private Label label5;
+        private Button button_addPhoto;
+        private Button button_deletePhoto;
+        private Button button_Export;
     }
 }

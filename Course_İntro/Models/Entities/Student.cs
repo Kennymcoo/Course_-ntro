@@ -7,14 +7,19 @@ using System.Threading.Tasks;
 
 namespace Course_İntro.Models.Entities
 {
-    internal class Student : Person
+    public class Student : Person
     {     
-        public Student(string firstName, string lastName, Gender gender) : base(firstName, lastName, gender)
+        public Student(string firstName, string lastName, Gender gender, byte[] picture) : base(firstName, lastName, gender,picture)
         {
         }
 
-        public Student(string firstName, string lastName, string maidenName) : base(firstName, lastName, maidenName)
+        public Student(string firstName, string lastName, string maidenName, byte[] picture) : base(firstName, lastName, maidenName,picture)
         {
+        }
+        //xml export için
+        public Student() 
+        { 
+
         }
     }
 }

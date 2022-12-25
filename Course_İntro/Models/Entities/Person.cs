@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Course_İntro.Models.Entities
 {
-    internal class Person
+    public class Person
     {
         public string FullName
         {
@@ -30,18 +30,20 @@ namespace Course_İntro.Models.Entities
             {
                 return _maidenName;
             }
-            private set
+             set
             {
                 _maidenName = value;
             }
         }
         public string Id { get; set; }
-        public string FirstName { get; private set; }
+        public string FirstName { get;  set; }
         public string LastName { get; set; }
         public Gender Gender { get; set; }
+        public byte[] Picture { get; set; }
 
-        public Person(string firstName, string lastName, Gender gender)
+        public Person(string firstName, string lastName, Gender gender, byte[] picture)
         {
+            Picture = picture;
             FirstName = firstName;
             LastName = lastName;
             Gender = gender;
@@ -49,9 +51,13 @@ namespace Course_İntro.Models.Entities
             Id = now.ToString("fffff");
         }
 
-        public Person(string firstName, string lastName, string maidenName) : this(firstName, lastName, Gender.Female)
+        public Person(string firstName, string lastName, string maidenName, byte[] picture) : this(firstName, lastName, Gender.Female,picture)
         {
             MaidenName = maidenName;
+        }
+        //xml export için
+        public Person() 
+        { 
         }
     }
 }

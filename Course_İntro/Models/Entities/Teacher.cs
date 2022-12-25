@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Course_İntro.Models.Entities
 {
-    internal class Teacher : Person
-    {
-        public Teacher(string firstName, string lastName, Gender gender) : base(firstName, lastName, gender)
-        {
-        }
+    //internal class Teacher : Person
+    //{
+    //    public Teacher(string firstName, string lastName, Gender gender) : base(firstName, lastName, gender)
+    //    {
+    //    }
 
-        public Teacher(string firstName, string lastName, string maidenName) : base(firstName, lastName, maidenName)
-        {
-        }
-    }
+    //    public Teacher(string firstName, string lastName, string maidenName) : base(firstName, lastName, maidenName)
+    //    {
+    //    }
+    //}
 }

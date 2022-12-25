@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Course_İntro.Models.Enums
 {
-    internal enum Gender
+    public enum Gender
     {
         Male,
         Female,        

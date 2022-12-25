@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
+
 namespace Course_İntro
 {
     public partial class MainView : Form
@@ -39,6 +40,19 @@ namespace Course_İntro
         //buttonları işlevleri
 
 
+        //6-export ile json xml seçilebilsin ve masaütüne kaydetebilesin
+
+        public MainView(DialogExport dialogExport) 
+        {
+            InitializeComponent();
+            _mainView = this;
+        }
+        public static MainView _mainView;
+
+        public void addListViewItem(string value) 
+        {
+            listView_students.Items.Add(value);
+        }
 
 
         private void ComboBox_gender_SelectedIndexChanged(object sender, EventArgs e)
@@ -80,12 +94,20 @@ namespace Course_İntro
         }
         private void Button_addStudent_Click(object sender, EventArgs e)
         {
+            
             if (!CheckIfTextBoxesAreFilled()) return;
 
+            if (pictureBox_Student.Image == null)
+            {
+                MessageBox.Show("need a picture");
+                return;
+            }
+           
             Student studentNew = CreateStudent();
             _studentList.Add(studentNew);
             RefreshListView();
             EmptyTextBoxes();
+            pictureBox_Student.Image = null;
         }
 
         private void RefreshListView() 
@@ -107,16 +129,24 @@ namespace Course_İntro
             textBox_maidenName.Text = emptyText;
             comboBox_gender.SelectedIndex = 0;
         }
+        public byte[] ImageToByteArray(System.Drawing.Image imageIn)
+        {
+            using (var ms = new MemoryStream())
+            {
+                imageIn.Save(ms, imageIn.RawFormat);
+                return ms.ToArray();
+            }
+        }
 
         private Student CreateStudent()
         {
             Gender selectedGender = ExtractGender();
-
+            byte[] pictureBytes = ImageToByteArray(pictureBox_Student.Image);
             Student studentNew;
             if (selectedGender != Gender.Female)
-                studentNew = new Student(textBox_firstName.Text, textBox_lastName.Text, selectedGender);
+                studentNew = new Student(textBox_firstName.Text, textBox_lastName.Text, selectedGender , pictureBytes);
             else
-                studentNew = new Student(textBox_firstName.Text, textBox_lastName.Text, textBox_maidenName.Text);
+                studentNew = new Student(textBox_firstName.Text, textBox_lastName.Text, textBox_maidenName.Text, pictureBytes);
 
             return studentNew;
         }
@@ -127,10 +157,6 @@ namespace Course_İntro
             Enum.TryParse(selectedValue, out Gender selectedGender);
             return selectedGender;
         }
-
-
-    
-
 
         private void Button_deleted_Click(object sender, EventArgs e)
         {
@@ -185,7 +211,8 @@ namespace Course_İntro
                 case Gender.Other:
                     comboBox_gender.SelectedIndex = 2;
                     break;               
-            }            
+            }
+            pictureBox_Student.Image = byteArrayToImage(student.Picture);
         }
 
         private void Button_saveAfterEdit_Click(object sender, EventArgs e)
@@ -199,6 +226,40 @@ namespace Course_İntro
             RefreshListView();
             EmptyTextBoxes();
             _indexToEdit = -1;
+        }
+
+
+        private void button_addPhoto_Click(object sender, EventArgs e)
+        {
+           
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "Image Files | *.jpg; *.jpeg; *.png";
+            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
+            
+            if (result == DialogResult.OK) // Test result.
+            {
+                pictureBox_Student.Image = new Bitmap(openFileDialog1.FileName);
+                string file = openFileDialog1.FileName;
+            }
+        }
+
+        private void button_deletePhoto_Click(object sender, EventArgs e)
+        {
+            pictureBox_Student.Image = null;
+        }
+
+        public Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
+        }
+        
+        private void Button_Export(object sender, EventArgs e)
+        {
+           DialogExport dialogExport = new DialogExport(_studentList);
+           dialogExport.ShowDialog();
+            
         }
     }
 }
