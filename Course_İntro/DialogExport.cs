@@ -1,23 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Xml;
-using Course_İntro.Models.Entities;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Collections;
-using System.IO;
-using System.Text.Json.Serialization;
+﻿using Course_İntro.Models.Entities;
 using System.Text.Json;
-using System.Xml.Linq;
-using DocumentFormat.OpenXml.Bibliography;
-using LiquidTechnologies.XmlObjects;
+using System.Xml.Serialization;
+
 
 namespace Course_İntro
 {
@@ -52,7 +36,8 @@ namespace Course_İntro
         {            
             string Json = JsonSerializer.Serialize(_studentList);
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            File.WriteAllText(Path.Combine(desktopPath, "studentList.json"), Json);
+            string filePath = Path.Combine(desktopPath, "studentList.json");
+            File.WriteAllText(filePath, Json);
             MessageBox.Show("save done");
             this.Close();
         }

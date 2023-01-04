@@ -9,6 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Net.Http.Json;
+using Newtonsoft.Json;
+using System.Xml.Serialization;
 
 
 
@@ -94,15 +99,30 @@ namespace Course_İntro
         }
         private void Button_addStudent_Click(object sender, EventArgs e)
         {
-            
+            Gender gender = ExtractGender();
             if (!CheckIfTextBoxesAreFilled()) return;
-
+            
+            string fullPath = System.Reflection.Assembly.GetAssembly(typeof(Program)).Location;
+            string theDirectory = Path.GetDirectoryName(fullPath);
+            string imagePath = Path.Combine(theDirectory, "Resources", "Image");
+            string imageFemale = Path.Combine(imagePath,"femaleavatar.png");
+            string imageOtherGender = Path.Combine(imagePath, "otheravatar.png");                     
             if (pictureBox_Student.Image == null)
             {
-                MessageBox.Show("need a picture");
-                return;
+                if (gender == Gender.Male)
+                {
+                    pictureBox_Student.Image = Properties.Resources.maleavatar;
+                }
+                else if (gender == Gender.Female)
+                {
+                    pictureBox_Student.Image = Image.FromFile(imageFemale);
+                }
+                else if (gender == Gender.Other)
+                { 
+                    pictureBox_Student.Image = Image.FromFile(imageOtherGender);
+                }
             }
-           
+
             Student studentNew = CreateStudent();
             _studentList.Add(studentNew);
             RefreshListView();
@@ -118,6 +138,7 @@ namespace Course_İntro
             {
                 Student student = _studentList[i];
                 listView_students.Items.Add(student.FullName);
+                
             }
 
         }
@@ -131,6 +152,10 @@ namespace Course_İntro
         }
         public byte[] ImageToByteArray(System.Drawing.Image imageIn)
         {
+            if (imageIn == null)
+            {
+                return null;
+            }
             using (var ms = new MemoryStream())
             {
                 imageIn.Save(ms, imageIn.RawFormat);
@@ -232,6 +257,8 @@ namespace Course_İntro
         private void button_addPhoto_Click(object sender, EventArgs e)
         {
            
+
+
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "Image Files | *.jpg; *.jpeg; *.png";
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
@@ -241,6 +268,8 @@ namespace Course_İntro
                 pictureBox_Student.Image = new Bitmap(openFileDialog1.FileName);
                 string file = openFileDialog1.FileName;
             }
+
+
         }
 
         private void button_deletePhoto_Click(object sender, EventArgs e)
@@ -261,5 +290,46 @@ namespace Course_İntro
            dialogExport.ShowDialog();
             
         }
+
+        private void button_import_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "Json files (*.json)|*.json|XML files (*.xml)|*.xml";
+            DialogResult  selectedFile = openFile.ShowDialog();
+           
+            string filePath = openFile.FileName;
+            string fileExtension = Path.GetExtension(filePath);
+
+            if (fileExtension.Equals(".json"))
+            {
+                string json = File.ReadAllText(filePath);
+                List<Student> students = JsonConvert.DeserializeObject<List<Student>>(json);
+                listView_students.Items.Clear();
+                foreach (Student student in students)
+                {
+                    listView_students.Items.Add(student.FullName);
+                }
+            }
+            else if (fileExtension.Equals(".xml"))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Student>));
+                StreamReader reader = new StreamReader(filePath);
+                List<Student> students = (List<Student>)serializer.Deserialize(reader);
+                reader.Close();
+                listView_students.Items.Clear();
+                foreach (Student student in students)
+                {
+                    listView_students.Items.Add(student.FullName);
+                }
+            }
+
+        }
+
+        private void button_Teacher_Click(object sender, EventArgs e)
+        {
+
+        }
+
+       
     }
 }
