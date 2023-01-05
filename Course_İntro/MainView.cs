@@ -14,8 +14,7 @@ using System.Text.Json.Serialization;
 using System.Net.Http.Json;
 using Newtonsoft.Json;
 using System.Xml.Serialization;
-
-
+using System.Reflection;
 
 namespace Course_İntro
 {
@@ -28,24 +27,27 @@ namespace Course_İntro
         public MainView()
         {
             InitializeComponent();
-
-            // Student student1 = new Student("Can Ata", "Elmacıoğlu", Gender.Male);
-            // //  Student student2 = new Student("Atahan", "Elmacıoğlu");
-            // // MessageBox.Show( student1.Id+": "+ student1.FirstName + " " + student1.LastName);
-            //// MessageBox.Show(student1.Id + ": " + student1.FullName+ " " + student1.MaidenName + " " + student1.Gender);         
-            // Student student3 = new Student("İlknur", "Elmacıoğlu", "İpekkesen");        
-            // MessageBox.Show(student3.Id + ": " + student3.FullName  + student3.Gender);
-
+            jsonFileListInStart();
             comboBox_gender.DataSource = Enum.GetNames(typeof(Gender));
-
+            
         }
 
-
-        //öğrenci eklendikten sonra yeni öğrenciyi hazır hale getir (textboxlar deful olsun)
-        //buttonları işlevleri
-
-
-        //6-export ile json xml seçilebilsin ve masaütüne kaydetebilesin
+        private void jsonFileListInStart()
+        {
+            string pathToJson = System.Reflection.Assembly.GetAssembly(typeof(Program)).Location;
+            string theJsonDirectory = Path.GetDirectoryName(pathToJson);
+            string jsonPath = Path.Combine(theJsonDirectory, "Resources", "Json");
+            string jsonListInSystem = Path.Combine(jsonPath, "studentList.json");
+            using (StreamReader jsonReader = new StreamReader(jsonListInSystem))
+            {
+                string jsonFileList = jsonReader.ReadToEnd();
+                List<Student> students = JsonConvert.DeserializeObject<List<Student>>(jsonFileList);
+                foreach (Student student in students)
+                {
+                    listView_students.Items.Add(student.FullName);
+                }
+            }
+        }
 
         public MainView(DialogExport dialogExport) 
         {
@@ -206,7 +208,7 @@ namespace Course_İntro
                 return;
             }
             int selectdIndex = listView_students.SelectedIndices[0];
-            Student student = _studentList[selectdIndex];
+            Student student = _studentList[selectdIndex];//hata
            
             MessageBox.Show(student.FullName );
 
@@ -328,8 +330,8 @@ namespace Course_İntro
         private void button_Teacher_Click(object sender, EventArgs e)
         {
 
+
         }
 
-       
     }
 }
