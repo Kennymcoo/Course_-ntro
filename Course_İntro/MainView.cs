@@ -24,15 +24,18 @@ namespace Course_İntro
         List<Student> _studentList = new List<Student>();
 
         int _indexToEdit = -1;
+
+        
         public MainView()
         {
             InitializeComponent();
-            jsonFileListInStart();
+            UploadJsonOnStartUp();
             comboBox_gender.DataSource = Enum.GetNames(typeof(Gender));
             
         }
 
-        private void jsonFileListInStart()
+
+        private void UploadJsonOnStartUp()
         {
             string pathToJson = System.Reflection.Assembly.GetAssembly(typeof(Program)).Location;
             string theJsonDirectory = Path.GetDirectoryName(pathToJson);
@@ -333,5 +336,6 @@ namespace Course_İntro
 
         }
 
+       
     }
 }
