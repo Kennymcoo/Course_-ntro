@@ -28,7 +28,8 @@ namespace Course_İntro
 
             //solution 2
 
-            Application.Run(new LoginView());
+           // Application.Run(new LoginView());
+            Application.Run(new MainView());
 
 
             //string name = "can";

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Button button_addStudent;
             this.textBox_firstName = new System.Windows.Forms.TextBox();
             this.textBox_lastName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,24 +47,17 @@
             this.button_import = new System.Windows.Forms.Button();
             this.button_show = new System.Windows.Forms.Button();
             this.listView_Teacher = new System.Windows.Forms.ListView();
-            this.button_Teacher = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            button_addStudent = new System.Windows.Forms.Button();
+            this.button_addPerson = new System.Windows.Forms.Button();
+            this.radioButton_student = new System.Windows.Forms.RadioButton();
+            this.radioButton_teacher = new System.Windows.Forms.RadioButton();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Student)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // button_addStudent
-            // 
-            button_addStudent.Location = new System.Drawing.Point(13, 114);
-            button_addStudent.Name = "button_addStudent";
-            button_addStudent.Size = new System.Drawing.Size(100, 23);
-            button_addStudent.TabIndex = 0;
-            button_addStudent.Text = "Add Student";
-            button_addStudent.UseVisualStyleBackColor = true;
-            button_addStudent.Click += new System.EventHandler(this.Button_addStudent_Click);
             // 
             // textBox_firstName
             // 
@@ -242,16 +234,6 @@
             this.listView_Teacher.TabIndex = 20;
             this.listView_Teacher.UseCompatibleStateImageBehavior = false;
             // 
-            // button_Teacher
-            // 
-            this.button_Teacher.Location = new System.Drawing.Point(145, 114);
-            this.button_Teacher.Name = "button_Teacher";
-            this.button_Teacher.Size = new System.Drawing.Size(100, 23);
-            this.button_Teacher.TabIndex = 21;
-            this.button_Teacher.Text = "Add Teacher";
-            this.button_Teacher.UseVisualStyleBackColor = true;
-            this.button_Teacher.Click += new System.EventHandler(this.button_Teacher_Click);
-            // 
             // groupBox1
             // 
             this.groupBox1.Location = new System.Drawing.Point(291, 30);
@@ -288,11 +270,55 @@
             this.label6.TabIndex = 25;
             this.label6.Text = "Teachers";
             // 
+            // button_addPerson
+            // 
+            this.button_addPerson.Location = new System.Drawing.Point(144, 118);
+            this.button_addPerson.Name = "button_addPerson";
+            this.button_addPerson.Size = new System.Drawing.Size(97, 23);
+            this.button_addPerson.TabIndex = 26;
+            this.button_addPerson.Text = "Add Person";
+            this.button_addPerson.UseVisualStyleBackColor = true;
+            this.button_addPerson.Click += new System.EventHandler(this.button_addPerson_Click);
+            // 
+            // radioButton_student
+            // 
+            this.radioButton_student.AutoSize = true;
+            this.radioButton_student.Checked = true;
+            this.radioButton_student.Location = new System.Drawing.Point(6, 22);
+            this.radioButton_student.Name = "radioButton_student";
+            this.radioButton_student.Size = new System.Drawing.Size(66, 19);
+            this.radioButton_student.TabIndex = 30;
+            this.radioButton_student.TabStop = true;
+            this.radioButton_student.Text = "Student";
+            this.radioButton_student.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_teacher
+            // 
+            this.radioButton_teacher.AutoSize = true;
+            this.radioButton_teacher.Location = new System.Drawing.Point(6, 47);
+            this.radioButton_teacher.Name = "radioButton_teacher";
+            this.radioButton_teacher.Size = new System.Drawing.Size(65, 19);
+            this.radioButton_teacher.TabIndex = 31;
+            this.radioButton_teacher.Text = "Teacher";
+            this.radioButton_teacher.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.radioButton_student);
+            this.groupBox3.Controls.Add(this.radioButton_teacher);
+            this.groupBox3.Location = new System.Drawing.Point(11, 118);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(102, 96);
+            this.groupBox3.TabIndex = 32;
+            this.groupBox3.TabStop = false;
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(905, 444);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.button_addPerson);
             this.Controls.Add(this.button_import);
             this.Controls.Add(this.button_deleted);
             this.Controls.Add(this.button_Export);
@@ -302,7 +328,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button_Teacher);
             this.Controls.Add(this.listView_Teacher);
             this.Controls.Add(this.button_deletePhoto);
             this.Controls.Add(this.button_addPhoto);
@@ -317,21 +342,20 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox_lastName);
             this.Controls.Add(this.textBox_firstName);
-            this.Controls.Add(button_addStudent);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainView";
             this.Text = " ";
             this.TransparencyKey = System.Drawing.Color.LightGray;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Student)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private Button button_addStudent;
         private TextBox textBox_firstName;
         private TextBox textBox_lastName;
         private Label label1;
@@ -351,10 +375,13 @@
         private Button button_import;
         private Button button_show;
         private ListView listView_Teacher;
-        private Button button_Teacher;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
         private Label label5;
         private Label label6;
+        private Button button_addPerson;
+        private RadioButton radioButton_student;
+        private RadioButton radioButton_teacher;
+        private GroupBox groupBox3;
     }
 }

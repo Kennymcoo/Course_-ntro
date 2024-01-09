@@ -56,7 +56,7 @@ namespace Course_İntro
                     MainView mainView = new MainView();
                     mainView.Show();
                     mainView.FormClosed += MainView_FormClosed;
-
+                    
 
 
 

@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace Course_İntro.Models.Entities
 {
-    //internal class Teacher : Person
-    //{
-    //    public Teacher(string firstName, string lastName, Gender gender) : base(firstName, lastName, gender)
-    //    {
-    //    }
+    public class Teacher : Person
+    {
+        public Teacher(string firstName, string lastName, Gender gender, byte[] picture) : base(firstName, lastName, gender, picture)
+        {
+        }
 
-    //    public Teacher(string firstName, string lastName, string maidenName) : base(firstName, lastName, maidenName)
-    //    {
-    //    }
-    //}
+        public Teacher(string firstName, string lastName, string maidenName, byte[] picture) : base(firstName, lastName, maidenName, picture)
+        {
+        }
+       
+    }
 }

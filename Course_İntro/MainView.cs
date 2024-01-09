@@ -21,9 +21,10 @@ namespace Course_İntro
     public partial class MainView : Form
     {
 
-        List<Student> _studentList = new List<Student>();
+        private List<Student> _studentList = new List<Student>();
+        private List<Teacher> _teacherList = new List<Teacher>();
 
-        int _indexToEdit = -1;
+        private int _indexToEdit = -1;
 
         
         public MainView()
@@ -45,23 +46,9 @@ namespace Course_İntro
             {
                 string jsonFileList = jsonReader.ReadToEnd();
                 List<Student> students = JsonConvert.DeserializeObject<List<Student>>(jsonFileList);
-                foreach (Student student in students)
-                {
-                    listView_students.Items.Add(student.FullName);
-                }
+                _studentList.AddRange(students);
+                RefreshListView();               
             }
-        }
-
-        public MainView(DialogExport dialogExport) 
-        {
-            InitializeComponent();
-            _mainView = this;
-        }
-        public static MainView _mainView;
-
-        public void addListViewItem(string value) 
-        {
-            listView_students.Items.Add(value);
         }
 
 
@@ -101,39 +88,7 @@ namespace Course_İntro
                 return false;
             }
             return true;
-        }
-        private void Button_addStudent_Click(object sender, EventArgs e)
-        {
-            Gender gender = ExtractGender();
-            if (!CheckIfTextBoxesAreFilled()) return;
-            
-            string fullPath = System.Reflection.Assembly.GetAssembly(typeof(Program)).Location;
-            string theDirectory = Path.GetDirectoryName(fullPath);
-            string imagePath = Path.Combine(theDirectory, "Resources", "Image");
-            string imageFemale = Path.Combine(imagePath,"femaleavatar.png");
-            string imageOtherGender = Path.Combine(imagePath, "otheravatar.png");                     
-            if (pictureBox_Student.Image == null)
-            {
-                if (gender == Gender.Male)
-                {
-                    pictureBox_Student.Image = Properties.Resources.maleavatar;
-                }
-                else if (gender == Gender.Female)
-                {
-                    pictureBox_Student.Image = Image.FromFile(imageFemale);
-                }
-                else if (gender == Gender.Other)
-                { 
-                    pictureBox_Student.Image = Image.FromFile(imageOtherGender);
-                }
-            }
-
-            Student studentNew = CreateStudent();
-            _studentList.Add(studentNew);
-            RefreshListView();
-            EmptyTextBoxes();
-            pictureBox_Student.Image = null;
-        }
+        }      
 
         private void RefreshListView() 
         {
@@ -142,10 +97,20 @@ namespace Course_İntro
             for (int i = 0; i < _studentList.Count; i++)
             {
                 Student student = _studentList[i];
-                listView_students.Items.Add(student.FullName);
-                
+                listView_students.Items.Add(student.FullName);                
             }
 
+        }
+
+        private void RefreshListViewTeacher() 
+        {
+            listView_Teacher.Items.Clear();
+
+            for (int i = 0; i < _teacherList.Count; i++)
+            {
+                Teacher teacher = _teacherList[i];
+                listView_Teacher.Items.Add(teacher.FullName);
+            }
         }
         private void EmptyTextBoxes()
         {
@@ -180,6 +145,20 @@ namespace Course_İntro
 
             return studentNew;
         }
+
+        private Teacher CreateTeacher() 
+        {
+            Gender selectedGender = ExtractGender();
+            byte[] pictureBytes = ImageToByteArray(pictureBox_Student.Image);
+            Teacher teacherNew;
+            if (selectedGender != Gender.Female)
+                teacherNew = new Teacher(textBox_firstName.Text, textBox_lastName.Text, selectedGender, pictureBytes);
+            else
+                teacherNew = new Teacher(textBox_firstName.Text, textBox_lastName.Text, textBox_maidenName.Text, pictureBytes);
+
+            return teacherNew;
+        }
+
 
         private Gender ExtractGender()
         {
@@ -237,7 +216,7 @@ namespace Course_İntro
                     break;
                 case Gender.Female:
                     comboBox_gender.SelectedIndex = 1;
-                    break;
+                    break; 
                 case Gender.Other:
                     comboBox_gender.SelectedIndex = 2;
                     break;               
@@ -330,12 +309,52 @@ namespace Course_İntro
 
         }
 
-        private void button_Teacher_Click(object sender, EventArgs e)
+        private void button_addPerson_Click(object sender, EventArgs e)
         {
+            if (!CheckIfTextBoxesAreFilled()) return;
 
+            bool isStudent = radioButton_student.Checked;
 
-        }
+            Gender gender = ExtractGender();
 
-       
+            string fullPath = System.Reflection.Assembly.GetAssembly(typeof(Program)).Location;
+            string theDirectory = Path.GetDirectoryName(fullPath);
+            string imagePath = Path.Combine(theDirectory, "Resources", "Image");
+            string imageFemale = Path.Combine(imagePath, "femaleavatar.png");
+            string imageOtherGender = Path.Combine(imagePath, "otheravatar.png");
+
+            switch (gender)
+            {
+                case Gender.Male:
+                    pictureBox_Student.Image = Properties.Resources.maleavatar;
+                    break;
+
+                case Gender.Female:
+                    pictureBox_Student.Image = Image.FromFile(imageFemale);
+                    break;
+
+                default:
+                case Gender.Other:
+                    pictureBox_Student.Image = Image.FromFile(imageOtherGender);
+                    break;    
+            }
+
+            if (isStudent)
+            {
+                Student studentNew = CreateStudent();
+                _studentList.Add(studentNew);
+                RefreshListView();
+            }
+            else
+            {
+                Teacher teacherNew = CreateTeacher();
+                _teacherList.Add(teacherNew);
+                RefreshListViewTeacher();
+            }
+
+            EmptyTextBoxes();
+            pictureBox_Student.Image = null;          
+        } 
+      
     }
 }
